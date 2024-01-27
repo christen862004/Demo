@@ -1,0 +1,42 @@
+﻿<h1>My First View :)</h1>
+
+<!--Compact - eacy to learn - render->
+
+
+<script>
+    console.log("Hello")
+</script>
+
+<style>
+    h1{color:red}
+</style>
+<!--C#-->
+<!--Razor Syntax "Server Side"-->
+<!--Block Of Code C# "DEcalre / caluation-->
+@{
+    //Valid C#
+    int x=10;
+    int y = x+10;
+}
+<!--inline Statment-->
+<h2> @x </h2>
+<h3> @y </h3>
+
+<!--Condtion Statme-->
+@if(x>y)
+{
+    <h1>x =@x greater than y=@y</h1>
+}
+else
+{
+    <h1>y =@y  greater than x= @x</h1>
+}
+
+<!--Looping "Iteration"-->
+@for(int i = 0; i < 10; i++)
+{
+    <li>@i</li>
+}
+
+
+
