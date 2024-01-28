@@ -1,0 +1,21 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<!--Key  & type casting-->
+<h2 style="color:@ViewData["clr"]"> @Model.Name</h2>
+@ViewData["Message"]
+<br />
+
+@(int.Parse(ViewData["temp"].ToString())+10)
+
+
+
+<select class="form-control">
+    @foreach (var item in (List<string>)ViewData["brch"])
+    {
+        <option>@item</option>
+    }
+</select>
