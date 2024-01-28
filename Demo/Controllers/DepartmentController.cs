@@ -22,7 +22,7 @@
             Branches.Add("Cairo");
             Branches.Add("MEnua");
             Branches.Add("Alex");
-            Branches.Add("Sohag");
+//            Branches.Add("Sohag");
 
             ViewData["brch"] = Branches;    
             ViewData["Message"] = "Hello";
