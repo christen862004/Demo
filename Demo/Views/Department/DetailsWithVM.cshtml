@@ -1,0 +1,21 @@
+﻿@* @using Demo.ViewModel
+@model DepartmentNAmeWithClrBrachTempViewModel *@
+
+@* @model Demo.ViewModel.DepartmentNAmeWithClrBrachTempViewModel *@
+
+@model DepartmentNAmeWithClrBrachTempViewModel
+
+@{
+    ViewData["Title"] = "DetailsWithVM";
+}
+
+<h1>DetailsWithVM</h1>
+@Model.DeptName
+@Model.Message
+<select>
+    @foreach (var item in Model.Branches)
+    {
+     <option>@item</option>   
+    }
+</select>
+

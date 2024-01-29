@@ -30,9 +30,33 @@
             ViewData["temp"] = 20;
             ViewData["Date"] = DateTime.Now;
 
+            ViewBag.age = 25;
+            ViewBag.clr = "green";
 
             return View("Details", deptModel);//view==DEtails ,Model  department
         }
 
+        public IActionResult DetailsWithVM(int id) {
+            /*depart name -clor -brch -temp -date*/
+            List<string> Branches = new List<string>();
+            Branches.Add("Cairo");
+            Branches.Add("MEnua");
+            Branches.Add("Alex");
+            Branches.Add("Sohag");
+
+            Department deptModel =
+                context.Departments.FirstOrDefault(d=>d.Id == id);//source fill vm
+
+            DepartmentNAmeWithClrBrachTempViewModel deptVm =
+                new DepartmentNAmeWithClrBrachTempViewModel();
+            //mapping "automapper"
+            deptVm.DeptName = deptModel.Name;
+            deptVm.DeptId = deptModel.Id;
+            deptVm.Color = "red";
+            deptVm.Branches= Branches;
+            deptVm.Temp = 20;
+
+            return View(deptVm);//view name= DetailsWithVM ,Model = DepartmentNAmeWithClrBrachTempViewModel
+        }
     }
 }

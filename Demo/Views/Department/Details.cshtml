@@ -4,7 +4,9 @@
 }
 
 <h1>Details</h1>
-<!--Key  & type casting-->
+<!--Magic Key  
+    &
+    type casting-->
 <h2 style="color:@ViewData["clr"]"> @Model.Name</h2>
 @ViewData["Message"]
 <br />
@@ -15,6 +17,18 @@
 
 <select class="form-control">
     @foreach (var item in (List<string>)ViewData["brch"])
+    {
+        <option>@item</option>
+    }
+</select>
+@ViewData["age"]
+@ViewBag.age
+<hr />
+<h2>REad info using ViewBag</h2>
+<h3>@ViewBag.Message</h3>
+<h3>@(ViewBag.temp+10)</h3>
+<select class="form-control">
+    @foreach (var item in ViewBag.brch)
     {
         <option>@item</option>
     }
