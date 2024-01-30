@@ -22,5 +22,29 @@ namespace Demo.Controllers
             int age= HttpContext.Session.GetInt32("Age").Value;//, 33);
             return Content($"name={name} \n age={age}");
         }
+
+
+
+        public IActionResult SetCookie()
+        {
+            //db - logic
+            //statemangement
+            CookieOptions options = new CookieOptions();
+            options.Expires = DateTimeOffset.Now.AddDays(1);
+            HttpContext.Response.Cookies.Append("name", "Ahmed",options);//Session Cookie     
+            HttpContext.Response.Cookies.Append("Age", "12", options);//Persistent Cookie
+            //2 Type of Cookie
+                //1) session cookie
+                //2) Presisitent Cookie :== Expirstion
+            return Content("Cookie SAved");
+        }
+
+        public IActionResult GetCookie()
+        {
+            //logic
+            string name=  HttpContext.Request.Cookies["name"];
+            string age = HttpContext.Request.Cookies["Age"];
+            return Content($"REad Cookie name={name} age={age}");
+        }
     }
 }

@@ -1,16 +1,37 @@
-﻿namespace Demo.Controllers
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Demo.Controllers
 {
     public class DepartmentController : Controller
     {
         ITIContext context = new ITIContext();
         public IActionResult Index()
         {
-            List<Department> DEptListMode= context.Departments.ToList();
+            List<Department> DEptListMode = context.Departments.ToList();
             //return View("Index", DEptListMode);  //View =Index ,Model ==>List<Department>
-            return View(DEptListMode);           //View =Index , Model ==>List <Department>
-
+            return View(DEptListMode);             //View =Index , Model ==>List <Department>
             //return View("Index");                //View =Index ,Model ==>null wrong
             //return View();                        //View=Index ,Model==>null
+        }
+        public IActionResult New()//open form
+        {
+            return View();//View = "New" ,Model= null
+        }
+        //Department/SAveNew?name=sd&managername=ahmed
+        //Can handel any request type(Post)
+        [HttpPost]
+        public IActionResult SaveNew(Department department)
+        {
+            if (department.Name != null)//Validation
+            {
+                context.Add(department);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("New",department);//view = New ,Model =DEpartment
+            }
         }
 
         public IActionResult Details(int id)
