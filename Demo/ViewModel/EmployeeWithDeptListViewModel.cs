@@ -11,6 +11,6 @@ namespace Demo.ViewModel
         public string Image { get; set; }
         public int Salary { get; set; }
         public int DepartmentID { get; set; }
-        public List<Department> DeptList { get; set; }
+        public List<Department> DeptList  { get; set; }
     }
 }
