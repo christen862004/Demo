@@ -32,5 +32,25 @@ namespace Demo.Controllers
                 return View("Edit", Emp);
             }
         }
+        
+        [HttpGet]//Link
+        public IActionResult New()
+        {
+            ViewData["DeptList"] = context.Departments.ToList();
+            return View();//NEw ,Model=Null
+        }
+
+        [HttpPost]//Submit
+        public IActionResult New(Employee Emp)
+        {
+            if (Emp.Name != null)
+            {
+                context.Add(Emp);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewData["DeptList"] = context.Departments.ToList();
+            return View(Emp);
+        }
     }
 }

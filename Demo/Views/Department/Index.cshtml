@@ -1,6 +1,8 @@
 ﻿@model List<Department>
 @{
     ViewData["Title"] = "Index";
+    // Layout = null;
+    Layout = "_AdvLayout";
 }
 <a href="/Department/New" class="btn btn-success">New DEpartment</a>
 <h1>Index</h1>
@@ -10,6 +12,9 @@
     <tr>
         <td>@item.Id</td>
         <td>@item.Name</td>
+        <td><a href="/DEpartment/Details/@item.Id">DEtails</a> </td>
+        <td>@Html.ActionLink("Show DEtails", "Details", "DEpartment", new { id =item.Id,name=item.Name})</td>
+@*         /Department/Details/1?name=Sd *@
     </tr>
 }
 </table>

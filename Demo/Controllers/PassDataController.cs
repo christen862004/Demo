@@ -4,6 +4,21 @@ namespace Demo.Controllers
 {
     public class PassDataController : Controller
     {
+        //PassData/MEthod1 :GEt
+        [HttpGet]
+        public IActionResult Method1()
+        {
+            return Content("Method1");
+        }
+        //PassData/MEthod1 :Post
+        [HttpPost]
+        public IActionResult Method1(int id)//request.form =>routeValue =>Quer =0
+        {
+            return Content("Method1_1");
+        }
+
+
+
         public IActionResult SetSession()
         {
             //logic

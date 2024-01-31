@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div style="width:100%;height:100px;background-color:brown;margin:10px"><h1> Head</h1> </div>
+    <div style="width:100%;height:100px;background-color:brown;margin:10px"> 
+        <h1>NAv</h1>   
+        @RenderSection("MenuSec",false)<!--REquired-->
+    </div>
+
+    <div style="background-color:antiquewhite;border:3px solid red;margin:10px">
+        @RenderBody()
+    </div>
+    <div style="width:100%;height:100px;background-color:brown;margin:10px"><h1> Footer
+        @RenderSection("FooterSec",false) <!--Optional Section-->
+    </h1></div>
+
+</body>
+</html>

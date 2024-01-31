@@ -5,7 +5,30 @@
 
 <h1>Edit</h1>
 <!---->
+<h1>Pure HTML</h1>
+<a href="/Employee/Index">Back To List</a>
+<h1>USing Html Helper</h1>
+@Html.ActionLink("Back To List","Index","Department")
+<h1>Using Tag Helper</h1>
+<a class="btn btn-success" asp-action="Index" asp-controller="Employee" 
+asp-route-id="ayh" asp-route-name="sdaf">Back To List</a>
+
+
+
 <form method="post" action="/Employee/SaveEdit/@Model.Id">
+    <div style="border:2px solid red;margin:5px">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form form-control" />
+
+        @Html.EditorFor(e=>e.Address)
+    <!--Lossly type helper-->
+    @* @Html.TextBox("Address")<br /> *@
+    <!--Strong Type Helper ==>Strong type View -->
+    @* @Html.LabelFor(e=>e.Address)<br />
+    @Html.TextBoxFor(e => e.Address, 
+            new { style = "color:white;background-color:black",@class="form form-control"}) *@
+    </div>
+
     @* <input type="hidden" name="Id" value="@Model.Id" /> *@
     <label>Name</label>
     <input type="text" id="Name" name="Name" value="@Model.Name" class="form-check form-control" />

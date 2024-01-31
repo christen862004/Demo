@@ -1,0 +1,39 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "New";
+    SelectList DeptItems = new SelectList(ViewBag.DeptList,"Id","Name");
+}
+
+<h1>New</h1>
+<!--using Tag helper by default method ==> Post -->
+<form method="post" asp-action="New" asp-controller="Employee"><!--asp-route-id="Model.Id"->
+    <!--Fill data-->
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form form-control"/>
+    </div>
+    <div>
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form form-control"/>
+    </div>
+    <div>
+        <label asp-for="Age"></label>
+        <input asp-for="Age" class="form form-control" />
+    </div>
+    <div>
+        <label asp-for="Salary"></label>
+        <input asp-for="Salary" class="form form-control" />
+    </div>
+    <div>
+        <label asp-for="Image"></label>
+        <input asp-for="Image" class="form form-control" />
+    </div>
+    <div>
+        <label asp-for="DepartmentID"></label>
+        
+        <select asp-for="DepartmentID" asp-items="DeptItems" class="form form-control">
+
+        </select>
+    </div>
+    <input type="submit" value="Create" />
+</form>
