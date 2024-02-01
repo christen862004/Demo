@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Demo.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Controllers
 {
@@ -15,7 +16,6 @@ namespace Demo.Controllers
             Employee EmpModel=context.Employees.FirstOrDefault(x => x.Id == id);
             ViewData["DeptList"] = context.Departments.ToList();
             return View(EmpModel);//view =Edit ,model =Employee
-            //id ,name,salary,deptId + List<Department>  
         }
         //save database
         [HttpPost]
@@ -24,7 +24,7 @@ namespace Demo.Controllers
             if (Emp.Name != null)
             {
                 context.Update(Emp);
-                context.SaveChanges();
+                context.SaveChanges();//
                 return RedirectToAction("Index");
             }
             else
@@ -43,14 +43,36 @@ namespace Demo.Controllers
         [HttpPost]//Submit
         public IActionResult New(Employee Emp)
         {
-            if (Emp.Name != null)
+            try
             {
-                context.Add(Emp);
-                context.SaveChanges();
-                return RedirectToAction("Index");
+                //if (Emp.Name != null && Emp.Salary>2000)
+                if(ModelState.IsValid==true)//Validation server side
+                {
+                        context.Add(Emp);
+                        context.SaveChanges();
+                        return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                //send expection details in firendly form
+                ModelState.AddModelError("DepartmentID", "Select DEpartment :)");// ex.Message);
             }
             ViewData["DeptList"] = context.Departments.ToList();
-            return View(Emp);
+            return View(Emp);//Emp ,viewDAta ,viewbag ==>MOdelState
+        }
+
+        public IActionResult CheckSalary(int Salary ,int Age)
+        {
+            //logic databse
+            if (Salary > 2000 && Age > 30)
+            {
+                return Json(true);
+            }else if(Salary > 5000 && Age > 40)
+            {
+                return Json(true);
+            }
+            return Json(false);
         }
     }
 }
