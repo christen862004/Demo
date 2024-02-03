@@ -2,10 +2,11 @@
 @{
     ViewData["Title"] = "Index";
     // Layout = null;
-    Layout = "_AdvLayout";
+    // Layout = "_AdvLayout";
 }
 <a href="/Department/New" class="btn btn-success">New DEpartment</a>
 <h1>Index</h1>
+<select id="emps"></select>
 <table class="table table-bordered table-hover">
 @foreach (var item in Model)
 {
@@ -13,8 +14,31 @@
         <td>@item.Id</td>
         <td>@item.Name</td>
         <td><a href="/DEpartment/Details/@item.Id">DEtails</a> </td>
+        <td><a href="#" onclick="GetEmps(@item.Id)">Show Emps</a></td>
         <td>@Html.ActionLink("Show DEtails", "Details", "DEpartment", new { id =item.Id,name=item.Name})</td>
 @*         /Department/Details/1?name=Sd *@
     </tr>
 }
 </table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    function GetEmps(deptId) {
+        event.preventDefault();
+        //
+        $.ajax({
+            url: "/Department/GetEmps?DEptid="+deptId,
+            success: function (result) {
+                console.log(result);
+                var emps = document.getElementById("emps");//get select element 
+                emps.innerHTML = "";
+                for(let item of result){
+                    console.log(item);
+                    emps.innerHTML += `<option value=${item.id}>${item.name} </option>`;
+                }
+            }
+        });
+
+    }
+</script>

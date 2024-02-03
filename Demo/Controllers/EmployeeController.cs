@@ -6,6 +6,40 @@ namespace Demo.Controllers
     public class EmployeeController : Controller
     {
         ITIContext context = new ITIContext();
+
+        //calling using ajax ==> using dom(js)
+        public IActionResult GEtPartialDetails(int id)
+        {
+            Employee EmpMode =
+                context.Employees.FirstOrDefault(e => e.Id == id);
+            // return View("_EmpCardPartial",EmpMode);//Viewstart ==>Layout
+            return PartialView("_EmpCardPartial", EmpMode);//Not Layout
+        }
+
+
+        public IActionResult DEtails(int id)
+        {
+            Employee EmpMode = context.Employees.FirstOrDefault(e => e.Id == id);
+            return View(EmpMode);
+        }
+
+
+        public IActionResult Detele(int id)
+        {
+            Employee EmpMode = context.Employees.FirstOrDefault(e => e.Id == id);
+            return View(EmpMode);
+        }
+
+
+        public IActionResult ConfirmDelte(int id)
+        {
+            //DElete Employee
+            return RedirectToAction("Index");
+        }
+
+
+
+
         public IActionResult Index()
         {
             List<Employee> EmpList = context.Employees.ToList();

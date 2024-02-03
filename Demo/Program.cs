@@ -46,7 +46,7 @@ namespace Demo
             
             app.UseStaticFiles();
             
-            app.UseRouting();//department/index (controoler ,action=) routing
+            app.UseRouting();//department/index (controoler =dep,action=index) routing
 
             app.UseSession();//not been configure session
 

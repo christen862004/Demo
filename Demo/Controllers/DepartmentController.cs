@@ -5,6 +5,17 @@ namespace Demo.Controllers
     public class DepartmentController : Controller
     {
         ITIContext context = new ITIContext();
+
+        //Depart,ent/GetEmps?DEptid=1
+        public IActionResult GetEmps(int DeptID)
+        {
+            var EmpListMode=
+                context.Employees
+                .Where(e => e.DepartmentID == DeptID)
+                .Select(e => new {e.Id,e.Name}).ToList();
+            return Json(EmpListMode);
+        }
+
         public IActionResult Index()
         {
             List<Department> DEptListMode = context.Departments.ToList();

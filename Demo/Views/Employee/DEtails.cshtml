@@ -1,0 +1,10 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "DEtails";
+}
+
+<h1>DEtails</h1>
+
+<partial name="_EmpCardPartial" model="Model"/>
+
+<a href="/Employee/Edit/@Model.Id">Edit </a>

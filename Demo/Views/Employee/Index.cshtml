@@ -6,6 +6,7 @@
 
 <a asp-action="New" asp-controller="Employee">New</a>
 <h1>Index</h1>
+<div id="div1" style="border:3px solid red"></div>
 <table class="table table-bordered table-hover">
     <tr>
         <th>Id</th>
@@ -17,8 +18,28 @@
         <tr>
             <td>@item.Id</td>
             <td>@item.Name</td>
+            <td><a href="#" onclick="GetData(@item.Id)" class="btn btn-success">Show DEatils(Ajax)</a></td>
+
             <td><a href="/Employee/Edit/@item.Id">Edit</a></td>
+            <td><a href="/Employee/DEtails/@item.Id">DEtails</a></td>
+            <td><a href="/Employee/Detele/@item.Id">Delete</a></td>
+
         </tr>
     }
 </table>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    function GetData(empID){
+        event.preventDefault();//href
+        //Ajax call  href="/Employee/GEtPartialDetails
+        $.ajax({
+            url: "/Employee/GEtPartialDetails/"+empID,
+            success: function (actionREsponse) {
+                console.log(actionREsponse);
+               // $("#div1").html(result);
+                document.getElementById("div1").innerHTML = actionREsponse;
+            }
+        });
+    }
+</script>
