@@ -9,9 +9,12 @@ namespace Demo.Models
         public DbSet<Department> Departments { get; set; }
 
         //table ==>database 
-        public ITIContext():base()
-        {}
-        
+        public ITIContext() : base()
+        { }
+
+        //using injection
+        public ITIContext(DbContextOptions<ITIContext> options) : base(options) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //builder ==>option

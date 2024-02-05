@@ -1,17 +1,28 @@
 ﻿using Demo.Models;
+using Demo.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Controllers
 {
     public class EmployeeController : Controller
     {
-        ITIContext context = new ITIContext();
+        //ITIContext context = new ITIContext();
+        IEmployeeRepository EmployeeRepository;
+        IDepartmentRepository DepartmentRepository;
+        //DI : Dont create ,but ask "Inject"
+        public EmployeeController(IEmployeeRepository _empREpo, IDepartmentRepository _deptREpo)
+        {
+            this.EmployeeRepository= _empREpo;
+            this.DepartmentRepository= _deptREpo;
+            //EmployeeRepository = new EmployeeRepository();
+            //DepartmentRepository = new DepartmentRepository();
+        }
 
         //calling using ajax ==> using dom(js)
         public IActionResult GEtPartialDetails(int id)
         {
             Employee EmpMode =
-                context.Employees.FirstOrDefault(e => e.Id == id);
+                EmployeeRepository.GetByID(id);
             // return View("_EmpCardPartial",EmpMode);//Viewstart ==>Layout
             return PartialView("_EmpCardPartial", EmpMode);//Not Layout
         }
@@ -19,14 +30,14 @@ namespace Demo.Controllers
 
         public IActionResult DEtails(int id)
         {
-            Employee EmpMode = context.Employees.FirstOrDefault(e => e.Id == id);
+            Employee EmpMode = EmployeeRepository.GetByID(id); ;
             return View(EmpMode);
         }
 
 
         public IActionResult Detele(int id)
         {
-            Employee EmpMode = context.Employees.FirstOrDefault(e => e.Id == id);
+            Employee EmpMode = EmployeeRepository.GetByID(id); ;
             return View(EmpMode);
         }
 
@@ -42,13 +53,13 @@ namespace Demo.Controllers
 
         public IActionResult Index()
         {
-            List<Employee> EmpList = context.Employees.ToList();
+            List<Employee> EmpList =EmployeeRepository.GetAll();
             return View(EmpList);
         }
         //open form
         public IActionResult Edit(int id) {
-            Employee EmpModel=context.Employees.FirstOrDefault(x => x.Id == id);
-            ViewData["DeptList"] = context.Departments.ToList();
+            Employee EmpModel = EmployeeRepository.GetByID(id); ;
+            ViewData["DeptList"] = DepartmentRepository.GetAll();
             return View(EmpModel);//view =Edit ,model =Employee
         }
         //save database
@@ -57,8 +68,8 @@ namespace Demo.Controllers
         {
             if (Emp.Name != null)
             {
-                context.Update(Emp);
-                context.SaveChanges();//
+                EmployeeRepository.Edit(Emp);
+                EmployeeRepository.Save();
                 return RedirectToAction("Index");
             }
             else
@@ -70,7 +81,7 @@ namespace Demo.Controllers
         [HttpGet]//Link
         public IActionResult New()
         {
-            ViewData["DeptList"] = context.Departments.ToList();
+            ViewData["DeptList"] = DepartmentRepository.GetAll();
             return View();//NEw ,Model=Null
         }
 
@@ -82,8 +93,8 @@ namespace Demo.Controllers
                 //if (Emp.Name != null && Emp.Salary>2000)
                 if(ModelState.IsValid==true)//Validation server side
                 {
-                        context.Add(Emp);
-                        context.SaveChanges();
+                    EmployeeRepository.Insert(Emp);
+                    EmployeeRepository.Save();
                         return RedirectToAction("Index");
                 }
             }
@@ -92,7 +103,7 @@ namespace Demo.Controllers
                 //send expection details in firendly form
                 ModelState.AddModelError("DepartmentID", "Select DEpartment :)");// ex.Message);
             }
-            ViewData["DeptList"] = context.Departments.ToList();
+            ViewData["DeptList"] = DepartmentRepository.GetAll();
             return View(Emp);//Emp ,viewDAta ,viewbag ==>MOdelState
         }
 

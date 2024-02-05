@@ -1,24 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Demo.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Controllers
 {
+    //DIP
     public class DepartmentController : Controller
     {
-        ITIContext context = new ITIContext();
-
+        //  ITIContext context = new ITIContext();
+        IDepartmentRepository DeptRepo;
+        IEmployeeRepository EmployeeRepo;
+        //DI
+        //Contrller Factory (ctor)
+        public DepartmentController
+            (IDepartmentRepository _DeptRepo, IEmployeeRepository _EmployeeRepo)
+        {
+            DeptRepo = _DeptRepo;//DIP
+            EmployeeRepo = _EmployeeRepo;
+        }
         //Depart,ent/GetEmps?DEptid=1
         public IActionResult GetEmps(int DeptID)
         {
             var EmpListMode=
-                context.Employees
-                .Where(e => e.DepartmentID == DeptID)
-                .Select(e => new {e.Id,e.Name}).ToList();
+                EmployeeRepo.FindByDeptID(DeptID).Select(e => new {e.Id,e.Name}).ToList();
             return Json(EmpListMode);
         }
 
         public IActionResult Index()
         {
-            List<Department> DEptListMode = context.Departments.ToList();
+            List<Department> DEptListMode = DeptRepo.GetAll();
             //return View("Index", DEptListMode);  //View =Index ,Model ==>List<Department>
             return View(DEptListMode);             //View =Index , Model ==>List <Department>
             //return View("Index");                //View =Index ,Model ==>null wrong
@@ -35,8 +44,8 @@ namespace Demo.Controllers
         {
             if (department.Name != null)//Validation
             {
-                context.Add(department);
-                context.SaveChanges();
+                DeptRepo.Insert(department);
+                DeptRepo.Save();
                 return RedirectToAction("Index");
             }
             else
@@ -48,7 +57,7 @@ namespace Demo.Controllers
         public IActionResult Details(int id)
         {
             //get depart info
-            Department deptModel = context.Departments.FirstOrDefault(d => d.Id == id);
+            Department deptModel = DeptRepo.GetByID(id);
             //--------------------Extra info send C# To HTML-----------------
             List<string> Branches=new    List<string>();
             Branches.Add("Cairo");
@@ -77,7 +86,7 @@ namespace Demo.Controllers
             Branches.Add("Sohag");
 
             Department deptModel =
-                context.Departments.FirstOrDefault(d=>d.Id == id);//source fill vm
+                DeptRepo.GetByID(id);//source fill vm
 
             DepartmentNAmeWithClrBrachTempViewModel deptVm =
                 new DepartmentNAmeWithClrBrachTempViewModel();
