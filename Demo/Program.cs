@@ -15,7 +15,7 @@ namespace Demo
             builder.Services.AddDbContext<ITIContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
-            });
+            }); 
 
 
             builder.Services.AddControllersWithViews();
