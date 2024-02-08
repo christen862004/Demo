@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Models
 {
     //Sql server - Server name - authantication - data base name "Options" Connection string"
-    public class ITIContext :DbContext
+    public class ITIContext :IdentityDbContext<ApplicationUser>
     {
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }

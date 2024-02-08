@@ -1,16 +1,34 @@
-﻿namespace Demo.Repository
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Demo.Repository
 {
     public class EmployeeRepository:IEmployeeRepository
     {
+        //public List<Employee> GetAllWithoutInclue(string? navPro=null)
+        //{
+        //    if(navPro == null)
+        //        return context.Employees.ToList();
+
+        //    return context.Employees.Include(navPro).ToList();
+        //}
+
+
+
+
+
+
         ITIContext context;
         public EmployeeRepository(ITIContext _context)
         {
             context = _context;
         }
         //CRUD
-        public List<Employee> GetAll()
+        public List<Employee> GetAll(string? include=null)//GetAll()
         {
-            return context.Employees.ToList();
+            if(include != null)
+                return context.Set<Employee>().Include(include).AsNoTracking().ToList();
+            return context.Set<Employee>().ToList();
+
         }
         public Employee GetByID(int id)
         {
@@ -37,5 +55,6 @@
         {
             return context.Employees.Where(e=>e.DepartmentID == deptID);
         }
+
     }
 }

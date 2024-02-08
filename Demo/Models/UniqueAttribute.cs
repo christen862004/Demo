@@ -9,10 +9,11 @@ namespace Demo.Models
         protected override ValidationResult? IsValid
             (object? value, ValidationContext validationContext)
         {
-          //  Employee EmpFromRequest = validationContext.ObjectInstance as Employee;
+            //  Employee EmpFromRequest = validationContext.ObjectInstance as Employee;
 
 
-            ITIContext context = new ITIContext();
+            ITIContext context = validationContext.GetService<ITIContext>();
+
             Employee Emp=
                 context.Employees
                 .FirstOrDefault(e => e.Name == value.ToString());

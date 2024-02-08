@@ -15,7 +15,7 @@ namespace Demo.Repository
         //CRUD
         public List<Department> GetAll()
         {
-            return context.Departments.ToList();
+            return context.Set<Department>().ToList();
         }
         public Department GetByID(int id)
         {

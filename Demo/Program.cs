@@ -1,3 +1,4 @@
+using Demo.Filtters;
 using Demo.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,13 +13,23 @@ namespace Demo
             // Add services to the container. -- Day8
             //1) Framwrok Service
             //2) Built in Service 
+            //global fitter
+            
+            builder.Services.AddControllersWithViews();
+            #region global fitter
+            //builder.Services.AddControllersWithViews(options =>
+            //{
+            //    options.Filters.Add(new HandelErrorAttribute());
+            //});
+            #endregion
+       
             builder.Services.AddDbContext<ITIContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
-            }); 
+            });
+            
 
-
-            builder.Services.AddControllersWithViews();
+            
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);

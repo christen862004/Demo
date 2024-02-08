@@ -2,7 +2,7 @@
 {
     public interface IEmployeeRepository
     {
-        public List<Employee> GetAll();
+        public List<Employee> GetAll(string? include);
         
         public Employee GetByID(int id);
         

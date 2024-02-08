@@ -1,11 +1,16 @@
 ﻿using Demo.Models;
 using Demo.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Controllers
 {
+    
     public class EmployeeController : Controller
     {
+       
+
+
         //ITIContext context = new ITIContext();
         IEmployeeRepository EmployeeRepository;
         IDepartmentRepository DepartmentRepository;
@@ -19,6 +24,7 @@ namespace Demo.Controllers
         }
 
         //calling using ajax ==> using dom(js)
+        
         public IActionResult GEtPartialDetails(int id)
         {
             Employee EmpMode =
@@ -50,10 +56,10 @@ namespace Demo.Controllers
 
 
 
-
+        
         public IActionResult Index()
         {
-            List<Employee> EmpList =EmployeeRepository.GetAll();
+            List<Employee> EmpList =EmployeeRepository.GetAll(null);
             return View(EmpList);
         }
         //open form
