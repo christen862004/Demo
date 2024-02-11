@@ -1,5 +1,6 @@
 using Demo.Filtters;
 using Demo.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo
@@ -27,8 +28,15 @@ namespace Demo
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
             });
-            
 
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+                options =>
+                {
+                    /*Custmize password Constrinat*/
+                    options.Password.RequiredLength = 5;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireDigit = false;
+                }).AddEntityFrameworkStores<ITIContext>();//Register To IDentity Service 
             
             builder.Services.AddSession(options =>
             {

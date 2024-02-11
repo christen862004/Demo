@@ -27,6 +27,7 @@ namespace Demo.Repository
         }
         public void Edit(Department obj)
         {
+            
             context.Update(obj);
         }
         public void Delete(int id)
