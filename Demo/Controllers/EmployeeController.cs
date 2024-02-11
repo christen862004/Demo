@@ -2,13 +2,29 @@
 using Demo.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Demo.Controllers
 {
     
     public class EmployeeController : Controller
     {
-       
+
+        [Authorize]//user data
+        public IActionResult ShowUserData()
+        {
+            Claim IdClaim=  
+                User.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);//return claim containt Id current user
+            string UserId = IdClaim.Value;
+            
+           // if (User.Identity.IsAuthenticated == true)
+           // {
+                return Content($"Hello {User.Identity.Name}");//
+           // }
+           // return RedirectToAction("Login","Account");
+
+        }
 
 
         //ITIContext context = new ITIContext();
@@ -33,7 +49,7 @@ namespace Demo.Controllers
             return PartialView("_EmpCardPartial", EmpMode);//Not Layout
         }
 
-
+       
         public IActionResult DEtails(int id)
         {
             Employee EmpMode = EmployeeRepository.GetByID(id); ;
@@ -56,7 +72,7 @@ namespace Demo.Controllers
 
 
 
-        
+        [Authorize(Roles ="Admin")]//have cooike and admin
         public IActionResult Index()
         {
             List<Employee> EmpList =EmployeeRepository.GetAll(null);

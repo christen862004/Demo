@@ -13,7 +13,7 @@ namespace Demo.Models
         //table ==>database 
         public ITIContext() : base()
         { }
-
+   
         //using injection
         public ITIContext(DbContextOptions<ITIContext> options) : base(options) { }
 

@@ -80,8 +80,11 @@ namespace Demo
             app.UseRouting();//department/index (controoler =dep,action=index) routing
 
             app.UseSession();//not been configure session
-
+            
+            app.UseAuthentication();//by default dd to piple line
+            
             app.UseAuthorization();//roles unused==>Authantictio
+            
             //custom route
             //app.MapControllerRoute(
             //    "Route1",

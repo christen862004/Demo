@@ -12,11 +12,6 @@ namespace Demo.Repository
         //    return context.Employees.Include(navPro).ToList();
         //}
 
-
-
-
-
-
         ITIContext context;
         public EmployeeRepository(ITIContext _context)
         {
